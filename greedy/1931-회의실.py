@@ -23,28 +23,3 @@ for i in range(N):
         cnt = cnt+1
 
 print(cnt)
-# b_cnt = 0
-# for _ in range(2):
-#     cnt = 0
-#     occupy = [1 for _ in range(max(arr, key=lambda x: x[1])[1]+1)]
-#     for i in arr:
-#         t = 1
-#         # if occupy[i[0]] and occupy[i[1]-1]:
-#         for j in range(i[0],i[1]): t = t * occupy[j]
-#         if t:
-#             for k in range(i[0], i[1]): occupy[k] = 0
-#             cnt = cnt+1
-#         # print(i, occupy)
-#     if cnt > b_cnt : b_cnt = cnt
-#     arr.sort(key= lambda x: (x[1]-x[0], x[0]))
-# print(b_cnt)
-
-# 반례 존재
-# 5
-# 0 3
-# 2 4
-# 3 6
-# 5 7
-# 6 9
-# [o] 3
-# [x] 2
