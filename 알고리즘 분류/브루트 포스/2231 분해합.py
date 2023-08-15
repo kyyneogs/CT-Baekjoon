@@ -1,7 +1,7 @@
 # dleaf님 아이디어를 참고함
 
 N = int(input())
-M = 1000000
+M = 10000000
 
 def slide(L,M):
     K = L%M//(M//10)
