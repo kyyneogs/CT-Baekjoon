@@ -9,6 +9,8 @@ que.append(N)
 while(que):
     K = que.popleft()
 
+    if K==1: break
+
     if K%3==0 and not visited[K//3]:
         visited[K//3] = visited[K]+1
         que.append(K//3)
