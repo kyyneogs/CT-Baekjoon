@@ -12,7 +12,7 @@ for _ in range(N-1):
 
 def DFS(start, sumi):
     for node, weight in graph[start]:
-        if not visited[node]:
+        if visited[node]==-1:
             visited[node] = sumi + weight
             DFS(node, sumi+weight)
 
