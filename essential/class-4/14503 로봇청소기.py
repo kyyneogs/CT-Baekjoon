@@ -19,7 +19,7 @@ def cleaning(x, y, d):
                 result += 1
             for i in range(d-1, d-5, -1):
                 nx, ny = x+dx[i], y+dy[i]
-                    
+
                 if arr[nx][ny]==0:
                     x, y, d = nx, ny, (i+4)%4
                     break
