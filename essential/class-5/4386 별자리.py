@@ -1,16 +1,5 @@
 import sys
-import math
 input = sys.stdin.readline
-
-N = int(input())
-arr = [tuple(map(float, input().split())) for _ in range(N)]
-parent = [i for i in range(N+1)]
-graph = []
-
-for i in range(N-1):
-    for j in range(i+1,N):
-        graph.append((((arr[i][0]-arr[j][0])**2 + (arr[i][1]-arr[j][1])**2)**0.5, i, j))
-graph.sort()
 
 def find_parent(x):
     if parent[x] != x:
@@ -23,13 +12,24 @@ def union_parent(u, v):
     else:
         parent[u] = v
 
+N = int(input())
+arr = [tuple(map(float, input().split())) for _ in range(N)]
+parent = [i for i in range(N+1)]
+graph = []
+
+for i in range(N-1):
+    for j in range(i+1,N):
+        dis = (arr[i][0]-arr[j][0])**2 + (arr[i][1]-arr[j][1])**2
+        graph.append((round(dis**0.5, 2), i+1, j+1))
+graph.sort()
+
 cnt, result = 0,0
 for w, u, v in graph:
-    # if cnt>=N:
-    #     break
+    if cnt>=N-1:
+        break
     up, vp = find_parent(u), find_parent(v)
     if up!=vp:
-        union_parent(u, v)
+        union_parent(up, vp)
         cnt += 1
         result += w
 print(round(result, 2))
