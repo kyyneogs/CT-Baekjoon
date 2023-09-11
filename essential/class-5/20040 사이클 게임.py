@@ -15,7 +15,6 @@ def union_parent(a, b):
 N, M = map(int, input().split())
 parent = [i for i in range(N)]
 
-
 arr = [list(map(int, input().split())) for _ in range(M)]
 
 result = 0
