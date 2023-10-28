@@ -2,14 +2,16 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-arr = [0]*10000001
-arrSet = set()
+nDict = {}
 for _ in range(N):
     t = int(input())
-    arr[t] += 1
-    arrSet.add(t)
+    if t not in nDict:
+        nDict[t] = 1
+    else:
+        nDict[t] += 1
 
-arrSet = sorted(list(arrSet))
-for i in arrSet:
-    for _ in range(arr[i]):
+arr = list(nDict.items())
+arr.sort()
+for i, j in arr:
+    for _ in range(j):
         print(i)

@@ -1,58 +1,57 @@
+import sys
 from collections import deque
+input = sys.stdin.readline
 
 N = int(input())
-board = [list(map(int, input().split())) for _ in range(N)]
-dx = [0,0,1,-1]
-dy = [1,-1,0,0]
-cnt = 0
-size = 2
+arr = [list(map(int, input().split())) for _ in range(N)]
+
+sharkSize = 2
+sharkEat = 0
+sharkLoc = [-1, -1]
+timeCount = 0
 for i in range(N):
     for j in range(N):
-        if board[i][j] == 9:
-            x, y = i, j
+        if arr[i][j] == 9:
+            sharkLoc = [i, j]
+            arr[i][j] = 0
 
-def bfs(x, y, size):
-    distance = [[0]*N for _ in range(N)]
+def bfs(x, y):
+    que, fishList = deque(), []
     visited = [[0]*N for _ in range(N)]
-
-    que = deque()
-    que.append((x,y))
     visited[x][y] = 1
+    que.append((x,y))
 
-    temp = []
-
+    dx, dy = [0, 0, -1, 1], [1, -1, 0, 0]
     while(que):
         x, y = que.popleft()
         for i in range(4):
-            nx = x+dx[i]
-            ny = y+dy[i]
-            if nx<0 or nx>=N or ny<0 or ny>=N or visited[nx][ny]:
+            nx = x + dx[i]
+            ny = y + dy[i]
+
+            if nx<0 or nx>=N or ny<0 or ny>=N:
                 continue
-            if board[nx][ny] <= size:
+
+            if not visited[nx][ny] and (arr[nx][ny] <= sharkSize):
+                visited[nx][ny] = visited[x][y]+1
                 que.append((nx,ny))
-                visited[nx][ny] = 1
-                distance[nx][ny] = distance[x][y] + 1
-                if 0< board[nx][ny] < size:
-                    temp.append((distance[nx][ny],ny,nx))
-    
-    return sorted(temp, key = lambda x:(-x[0], -x[1], -x[2]))
+                if arr[nx][ny] and arr[nx][ny] < sharkSize:
+                    fishList.append((visited[nx][ny]-1, nx, ny))
 
-result = 0
+    fishList.sort(key = lambda x:(x[0],x[1], x[2]))
+    return fishList
 
-while(True):
-    shark = bfs(x,y,size)
-    if not len(shark):
+while True:
+    fishList = bfs(sharkLoc[0], sharkLoc[1])
+    if not fishList:
         break
 
-    distance, ky, kx = shark.pop()
+    time, sx, sy = fishList[0]
+    sharkEat += 1
+    if sharkEat == sharkSize:
+        sharkSize += 1
+        sharkEat = 0
+    sharkLoc = [sx, sy]
+    timeCount += time
+    arr[sx][sy] = 0
 
-    result += distance
-    board[x][y], board[kx][ky] = 0,0
-
-    x, y = kx, ky
-    cnt += 1
-    if cnt == size:
-        size += 1
-        cnt = 0
-
-print(result)
+print(timeCount)
