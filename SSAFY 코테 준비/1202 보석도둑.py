@@ -2,17 +2,18 @@ import sys, heapq
 input = sys.stdin.readline
 
 N, K = map(int, input().split())
-que, jewerlys = [], []
-for _ in range(N):
-    heapq.heappush(jewerlys, list(map(int, input().split())))
+jews = [list(map(int, input().split())) for _ in range(N)]
 bags = [int(input()) for _ in range(K)]
+jews.sort(reverse=True)
 bags.sort()
 
-answer = 0
-for i in range(K):
-    while jewerlys and bags[i] >= jewerlys[0][0]:
-        heapq.heappush(que, -heapq.heappop(jewerlys)[1])
-    if que:
-        answer += -heapq.heappop(que)
+que = []
+result = 0
 
-print(answer)
+for bag in bags:
+    while jews and jews[-1][0] <= bag:
+        heapq.heappush(que, -jews.pop()[1])
+    if que:
+        result += -heapq.heappop(que)
+
+print(result)
