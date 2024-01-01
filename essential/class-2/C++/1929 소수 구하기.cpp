@@ -13,6 +13,7 @@ int main(){
     arr[1] = 1;
 
     for(int i=2; i<=(int)pow(N, 0.5); i++){
+        if (arr[i]) continue;
         int j=i*2;
         while(j <= N){
             arr[j]++;
